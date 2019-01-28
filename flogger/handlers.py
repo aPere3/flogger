@@ -17,7 +17,7 @@ from pprint import pformat
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
-
+tsb_writer = tensorboardX.SummaryWriter(log_dir="/tmp")
 
 ############
 # HANDLERS #
@@ -103,7 +103,8 @@ def add_tsb_scalar_last(entry, data, subfolder="", path=".", **kwargs):
 
     tsb_dir = os.path.join(path, subfolder)
     os.makedirs(tsb_dir, exist_ok=True)
-    tsb_writer = tensorboardX.SummaryWriter(log_dir=tsb_dir)
+    if tsb_writer.file_writer.get_logdir() != tsb_dir:
+        tsb_writer.file_writer = tensorboardX.FileWriter(tsb_dir)
     last_time = max(data.keys())
     value = data[last_time]
     tsb_writer.add_scalar(entry, value, last_time)
@@ -120,7 +121,8 @@ def add_tsb_scalars_last(entry, data, labels=None, path=".", subfolder="", **kwa
     """
     tsb_dir = os.path.join(path, subfolder)
     os.makedirs(tsb_dir, exist_ok=True)
-    tsb_writer = tensorboardX.SummaryWriter(log_dir=tsb_dir)
+    if tsb_writer.file_writer.get_logdir() != tsb_dir:
+        tsb_writer.file_writer = tensorboardX.FileWriter(tsb_dir)
     last_time = max(data.keys())
     value = data[last_time]
     if labels is None:
@@ -139,7 +141,8 @@ def add_tsb_image_last(entry, data, path=".", subfolder="", **kwargs):
     """
     tsb_dir = os.path.join(path, subfolder)
     os.makedirs(tsb_dir, exist_ok=True)
-    tsb_writer = tensorboardX.SummaryWriter(log_dir=tsb_dir)
+    if tsb_writer.file_writer.get_logdir() != tsb_dir:
+        tsb_writer.file_writer = tensorboardX.FileWriter(tsb_dir)
     last_time = max(data.keys())
     value = data[last_time]
     tsb_writer.add_image(entry, value, last_time)

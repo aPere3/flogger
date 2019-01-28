@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='flogger',
-      version='0.1.3',
+      version='0.1.4',
       description='Data logging made harder',
       url='http://github.com/aPere3/flogger',
       author='Alexandre Péré',
