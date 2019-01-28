@@ -42,7 +42,7 @@ class DataLogger(metaclass=Singleton):
     @staticmethod
     def _error_callback(exception: Exception):
         """Called on exception"""
-        print(f"Exception {exception} occurred during a handling.")
+        print(f"Exception {repr(exception)} occurred during a handling.")
 
     @staticmethod
     def _push(managed, entry, value, time):
