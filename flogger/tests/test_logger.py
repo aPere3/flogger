@@ -5,7 +5,7 @@ if __name__ == "__main__":
 
     a = fl.DataLogger()
     a.set_path("./test_output")
-    a.set_pool("thread", 10)
+    a.set_pool("sync", 10)
     a.set_name("kikou")
     a.declare("Loss",
               [fl.echo_last, fl.add_tsb_scalar_last, fl.save_to_json],

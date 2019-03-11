@@ -21,6 +21,7 @@ from abc import ABCMeta, abstractmethod
 logging.basicConfig(level=logging.INFO,
                     format="[%(asctime)s] %(levelname)s [%(module)s:%(funcName)s:%(lineno)d] %(message)s")
 
+
 #############
 # SINGLETON #
 #############
@@ -34,6 +35,7 @@ class Singleton(type):
         if cls not in cls._instances:
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
+
 
 ###############
 # FALSE POOLS #
@@ -53,6 +55,7 @@ class SyncPool(dict):
         finally:
             return result
 
+
 class SilentPool(dict):
     """
     A false pool that does not perform the actual functions. 
@@ -62,6 +65,7 @@ class SilentPool(dict):
         result = ApplyResult(self, None, None)
         result._set(0, (True, 0))
         return result
+
 
 ##############
 # DATA STORE #
@@ -131,6 +135,7 @@ class AbstractDataStore(metaclass=ABCMeta):
     @abstractmethod
     def get_counter(self, entry):
         pass
+
 
 class SynchronousDataStore(AbstractDataStore):
 
@@ -203,21 +208,22 @@ class SynchronousDataStore(AbstractDataStore):
     def get_counter(self, entry):
         return self._managed.counters[entry]
 
+
 class AsynchronousDataStore(AbstractDataStore):
 
     def __init__(self):
-         super(AsynchronousDataStore).__init__()
-         self._manager = Manager()
-         self._managed = self._manager.Namespace()
-         self._managed.name = "data-logger"
-         self._managed.path = "."
-         self._managed.entries = self._manager.list()
-         self._managed.data = self._manager.dict()
-         self._managed.lockers = self._manager.dict()
-         self._managed.counters = self._manager.dict()
-         self._managed.on_push_callables = self._manager.dict()
-         self._managed.on_reset_callables = self._manager.dict()
-         self._managed.on_dump_callables = self._manager.dict()
+        super(AsynchronousDataStore).__init__()
+        self._manager = Manager()
+        self._managed = self._manager.Namespace()
+        self._managed.name = "data-logger"
+        self._managed.path = "."
+        self._managed.entries = self._manager.list()
+        self._managed.data = self._manager.dict()
+        self._managed.lockers = self._manager.dict()
+        self._managed.counters = self._manager.dict()
+        self._managed.on_push_callables = self._manager.dict()
+        self._managed.on_reset_callables = self._manager.dict()
+        self._managed.on_dump_callables = self._manager.dict()
     
     def get_name(self):
         return self._managed.name

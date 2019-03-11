@@ -8,6 +8,7 @@ setup(name='flogger',
       author_email='alexandre.pere@inria.fr',
       license='MIT',
       packages=['flogger'],
+      python_requires='>=3.6',
       install_requires=[
             "matplotlib",
             "numpy",

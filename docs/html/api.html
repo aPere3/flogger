@@ -17,33 +17,44 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Some important remarks" href="remarks.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -275,22 +286,6 @@ able to handle the data that will be pushed.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="flogger.DataLogger.set_mode">
-<code class="descname">set_mode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.set_mode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the mode of the logger.</p>
-<p>If mode is <cite>active</cite>, then data are stored and handled. If mode is <cite>passive</cite>, data are not stored, and handlers
-are not triggered.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<em>string</em>) – The mode. Either “active” or “passive”.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
 <dt id="flogger.DataLogger.set_name">
 <code class="descname">set_name</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.set_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the name of the logger.</p>
@@ -321,13 +316,22 @@ are not triggered.</p>
 <dl class="method">
 <dt id="flogger.DataLogger.set_pool">
 <code class="descname">set_pool</code><span class="sig-paren">(</span><em>pool</em>, <em>n_par=5</em><span class="sig-paren">)</span><a class="headerlink" href="#flogger.DataLogger.set_pool" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the executor to be used to call handlers.</p>
+<dd><p>Sets the executor to be used to call handlers.
+The pool can be:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Thread based, in which case the <cite>n_par</cite> argument gives the number of threads executors.</li>
+<li>Process based, in which case the <cite>n_par</cite> argument gives the number of process executors.</li>
+<li>Synchronous, in which case whatever the <cite>n_par</cite>, the handlers are executed right away.</li>
+<li>Silent, in which case, whatever the <cite>n_par</cite>, the handlers will not be executed.</li>
+</ul>
+</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>pool</strong> (<em>string</em>) – The type of executor to use to call handlers. Either “thread” or “process”.</li>
+<li><strong>pool</strong> (<em>string</em>) – The type of executor to use to call handlers. Either “thread”, “process”, “sync” or “silent”.</li>
 <li><strong>n_par</strong> (<em>int</em>) – The number of executor to use.</li>
 </ul>
 </td>
@@ -774,7 +778,7 @@ log entry.</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="remarks.html" class="btn btn-neutral" title="Some important remarks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="remarks.html" class="btn btn-neutral float-left" title="Some important remarks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -800,35 +804,16 @@ log entry.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'0.1',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

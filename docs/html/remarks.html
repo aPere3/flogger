@@ -17,34 +17,45 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'0.1',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API" href="api.html" />
     <link rel="prev" title="Tutorial" href="tutorial.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -172,13 +183,19 @@ classes to log various types of information. But to avoid any problems, try to s
 </div>
 <div class="section" id="asynchronous-handling">
 <h2>Asynchronous handling<a class="headerlink" href="#asynchronous-handling" title="Permalink to this headline">¶</a></h2>
-<p>The handling of data is made asynchronously. This means that handlers are not called by your experiment thread, but by
-separate threads or processes (depending on your preferences). This allows to temper the impact of logging on the
-performances of your experiment. For this reason, your data have to be <strong>pickable</strong>.</p>
+<p>The handling of data can both be made synchronously or asynchronously, by using <cite>.set_pool</cite>. In the synchronous case,
+the handlers are sequentially executed in the experiment thread when <code class="docutils literal notranslate"><span class="pre">push</span></code>, <code class="docutils literal notranslate"><span class="pre">reset</span></code>, or <code class="docutils literal notranslate"><span class="pre">dump</span></code> are called. In the
+asynchronous case, handlers are not called by your experiment thread, but are defered to separate threads or processes
+(depending on your preferences). This allows to temper the impact of logging on the performances of your experiment.
+For this to work, your data have to be <strong>pickable</strong>.</p>
+<p>Depending on the quantity of data and the quantity of handler calls, you may prefer to use synchronous or asynchronous
+handling. Basically, if your logs are very quick to execute and use few data, you are better off using synchronous handling.
+In the contrary, if you have large pieces of data such as images, or your handlers contain heavy computation, you should
+be using asynchronous handling to avoid stopping the experiment thread for too long.</p>
 <p>This being said, as you may know, python parallel capabilities are not quite perfect, and depending on how heavy are
-your logging and your data, using threads or processes may give different improvements. Also, increasing the number of
-threads or processes, may not end up in an increase of the data handling rate. As of now, we don’t have particular
-advices to tune that, other than testing and seeing how the handling rate changes.</p>
+your logging and your data, using threads or processes for the asynchronous handling may give different improvements.
+Also, increasing the number of threads or processes, may not end up in an increase of the data handling rate. As of
+now, we don’t have particular advices to tune that, other than testing and seeing how the handling rate changes.</p>
 <p>To do that, you can use the <code class="docutils literal notranslate"><span class="pre">wait()</span></code> method. This method will wait for the handling queue to be emptied, and will log
 the duration of data handling in your console. It may be a good idea to call this after each iteration of your
 algorithms, to see how it changes with different logging parameters.</p>
@@ -216,7 +233,7 @@ would be named <code class="docutils literal notranslate"><span class="pre">Loss
         <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tutorial.html" class="btn btn-neutral" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tutorial.html" class="btn btn-neutral float-left" title="Tutorial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -242,35 +259,16 @@ would be named <code class="docutils literal notranslate"><span class="pre">Loss
   
 
 
-  
-
-    
-    
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'0.1',
-              LANGUAGE:'None',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

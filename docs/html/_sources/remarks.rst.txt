@@ -18,14 +18,21 @@ classes to log various types of information. But to avoid any problems, try to s
 
 Asynchronous handling
 ^^^^^^^^^^^^^^^^^^^^^
-The handling of data is made asynchronously. This means that handlers are not called by your experiment thread, but by
-separate threads or processes (depending on your preferences). This allows to temper the impact of logging on the
-performances of your experiment. For this reason, your data have to be **pickable**.
+The handling of data can both be made synchronously or asynchronously, by using `.set_pool`. In the synchronous case,
+the handlers are sequentially executed in the experiment thread when ``push``, ``reset``, or ``dump`` are called. In the
+asynchronous case, handlers are not called by your experiment thread, but are defered to separate threads or processes 
+(depending on your preferences). This allows to temper the impact of logging on the performances of your experiment. 
+For this to work, your data have to be **pickable**. 
+
+Depending on the quantity of data and the quantity of handler calls, you may prefer to use synchronous or asynchronous
+handling. Basically, if your logs are very quick to execute and use few data, you are better off using synchronous handling.
+In the contrary, if you have large pieces of data such as images, or your handlers contain heavy computation, you should
+be using asynchronous handling to avoid stopping the experiment thread for too long.
 
 This being said, as you may know, python parallel capabilities are not quite perfect, and depending on how heavy are
-your logging and your data, using threads or processes may give different improvements. Also, increasing the number of
-threads or processes, may not end up in an increase of the data handling rate. As of now, we don't have particular
-advices to tune that, other than testing and seeing how the handling rate changes.
+your logging and your data, using threads or processes for the asynchronous handling may give different improvements. 
+Also, increasing the number of threads or processes, may not end up in an increase of the data handling rate. As of 
+now, we don't have particular advices to tune that, other than testing and seeing how the handling rate changes.
 
 To do that, you can use the ``wait()`` method. This method will wait for the handling queue to be emptied, and will log
 the duration of data handling in your console. It may be a good idea to call this after each iteration of your
